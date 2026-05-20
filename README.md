@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Home Workout Tracker
 
-## Getting Started
+Website jadwal & tracker olahraga di rumah untuk pemula. Fokus pada pembentukan
+lengan, bisep, dan perut menggunakan alat seadanya yang sudah ada di rumah.
 
-First, run the development server:
+## Fitur
+
+- **Profil personal** — atur nama, umur, tinggi, berat, goal.
+- **Program 4 minggu** — progresif dari knee push-up sampai full push-up.
+  Split: Push / Core / Pull / Cardio / Full Body / 2 hari rest.
+- **22+ latihan** dengan langkah, tips, dan alat yang dibutuhkan.
+- **Progress tracker** — centang tiap set & hari yang diselesaikan,
+  heatmap 4 minggu, streak counter. Data disimpan di `localStorage` browser.
+- **Panduan alat** — bertahap dari yang gratis (botol air, kursi) sampai
+  opsional (dumbbell, resistance band).
+- **Panduan nutrisi** singkat dengan menu contoh & sumber protein lokal.
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org/) (App Router, static export)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- TypeScript
+- LocalStorage untuk persistensi progres (tanpa backend)
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build & Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+Output statis ada di `out/`. Bisa di-deploy ke Vercel, Netlify, Cloudflare
+Pages, atau static host mana saja. Tidak ada server-side requirements.
 
-To learn more about Next.js, take a look at the following resources:
+## Struktur
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/
+├── layout.tsx              # Root layout + nav
+├── page.tsx                # Home (profil + latihan hari ini)
+├── jadwal/
+│   ├── page.tsx            # Daftar minggu & hari
+│   └── [minggu]/[hari]/    # Detail latihan per hari
+├── latihan/[id]/           # Detail tiap exercise
+├── progres/                # Heatmap, streak, reset
+├── alat/                   # Rekomendasi alat
+└── nutrisi/                # Panduan makan
+lib/
+├── exercises.ts            # Daftar 22 latihan
+├── program.ts              # Jadwal 4 minggu × 7 hari
+└── storage.ts              # localStorage helpers
+```
