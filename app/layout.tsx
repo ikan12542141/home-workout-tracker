@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Home Workout Tracker — Bentuk Tubuh di Rumah",
+  title: "Home Workout Tracker — Bentuk Tubuh di Rumah 6 Bulan",
   description:
-    "Program olahraga 4 minggu untuk pemula. Fokus lengan, bisep, dan perut. Bisa dilakukan di rumah dengan alat seadanya.",
+    "Program olahraga 24 minggu untuk pemula. Fokus lengan, bisep, dan perut. Bisa dilakukan di rumah dengan alat seadanya atau alat DIY murah.",
 };
 
 export const viewport: Viewport = {
@@ -28,7 +28,10 @@ export const viewport: Viewport = {
 const NAV_ITEMS = [
   { href: "/", label: "Beranda" },
   { href: "/jadwal", label: "Jadwal" },
+  { href: "/rencana", label: "Rencana" },
   { href: "/progres", label: "Progres" },
+  { href: "/ukuran", label: "Ukuran" },
+  { href: "/jurnal", label: "Jurnal" },
   { href: "/alat", label: "Alat" },
   { href: "/nutrisi", label: "Nutrisi" },
 ];

@@ -1,33 +1,109 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { PROGRAM, dayKey } from "@/lib/program";
+import { getExercise } from "@/lib/exercises";
 import {
+  exportAllData,
+  importAllData,
+  loadAchievements,
+  loadJournal,
+  loadMeasurements,
   loadProgress,
+  loadRecords,
   resetProgress,
+  unlockAchievement,
+  type FullBackup,
+  type PersonalRecord,
   type Progress,
 } from "@/lib/storage";
+import {
+  ACHIEVEMENTS,
+  type Achievement,
+  checkNewlyUnlocked,
+} from "@/lib/achievements";
 
 const HARI_SINGKAT = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
 
 export default function ProgresPage() {
   const [progress, setProgress] = useState<Progress | null>(null);
+  const [records, setRecords] = useState<PersonalRecord[]>([]);
+  const [unlocked, setUnlocked] = useState<Record<string, { unlockedAt: string }>>(
+    {},
+  );
   const [confirmReset, setConfirmReset] = useState(false);
+  const [importMsg, setImportMsg] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setProgress(loadProgress());
+    const p = loadProgress();
+    const r = loadRecords();
+    const m = loadMeasurements();
+    const j = loadJournal();
+    let u = loadAchievements();
+    const newly = checkNewlyUnlocked(
+      { progress: p, records: r, journal: j, measurements: m },
+      u,
+    );
+    newly.forEach((a) => unlockAchievement(a.id));
+    u = loadAchievements();
+    setProgress(p);
+    setRecords(r);
+    setUnlocked(u);
   }, []);
 
-  const totalDone = progress
-    ? Object.keys(progress.completedDays).length
-    : 0;
+  const totalDone = progress ? Object.keys(progress.completedDays).length : 0;
   const totalDays = PROGRAM.length * 7;
   const pct = Math.round((totalDone / totalDays) * 100);
-
   const streakDays = countStreak(progress);
 
+  function downloadBackup() {
+    const data = exportAllData();
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    const date = new Date().toISOString().slice(0, 10);
+    a.download = `hwt-backup-${date}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function handleImport(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text) as FullBackup;
+      if (data.version !== 1) {
+        setImportMsg("Versi backup tidak didukung");
+        return;
+      }
+      if (
+        !confirm(
+          `Backup ini dari ${data.exportedAt?.slice(0, 10) ?? "?"}. Data saat ini akan ditimpa. Lanjut?`,
+        )
+      )
+        return;
+      importAllData(data);
+      setImportMsg("Backup berhasil di-restore. Refreshing...");
+      setTimeout(() => window.location.reload(), 1200);
+    } catch (err) {
+      console.error(err);
+      setImportMsg("File tidak valid");
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }
+
+  const unlockedAch = ACHIEVEMENTS.filter((a) => unlocked[a.id]);
+  const lockedAch = ACHIEVEMENTS.filter((a) => !unlocked[a.id]);
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
           Progres Kamu
@@ -72,19 +148,90 @@ export default function ProgresPage() {
         </div>
         <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4">
           <div className="text-[var(--muted)] text-xs uppercase tracking-wide">
-            Set Diselesaikan
+            Badge Unlocked
           </div>
           <div className="text-3xl font-bold mt-1">
-            {progress
-              ? Object.values(progress.completedSets).filter(Boolean).length
-              : 0}
+            {unlockedAch.length}
+            <span className="text-base text-[var(--muted)]">
+              {" "}
+              / {ACHIEVEMENTS.length}
+            </span>
           </div>
-          <div className="text-xs text-[var(--muted)] mt-1">total set tercatat</div>
+          <div className="text-xs text-[var(--muted)] mt-1">
+            achievement terbuka
+          </div>
         </div>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-lg font-bold">Heatmap 4 Minggu</h2>
+        <div className="flex items-baseline justify-between">
+          <h2 className="text-lg font-bold">Personal Records</h2>
+          <Link
+            href="/jadwal"
+            className="text-xs text-[var(--muted)] hover:text-[var(--foreground)]"
+          >
+            input PR di halaman jadwal →
+          </Link>
+        </div>
+        {records.length === 0 ? (
+          <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 text-sm text-[var(--muted)]">
+            Belum ada PR tercatat. Buka halaman jadwal, expand latihan, dan
+            input record terbaik kamu setelah selesai.
+          </div>
+        ) : (
+          <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+            {records.map((r) => {
+              const ex = getExercise(r.exerciseId);
+              if (!ex) return null;
+              return (
+                <div
+                  key={r.exerciseId}
+                  className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3"
+                >
+                  <p className="text-xs text-[var(--muted)] truncate">
+                    {ex.nama}
+                  </p>
+                  <p className="text-2xl font-bold mt-1">
+                    {r.value}
+                    <span className="text-sm text-[var(--muted)] ml-1">
+                      {r.unit}
+                    </span>
+                  </p>
+                  <p className="text-[10px] text-[var(--muted)] font-mono mt-1">
+                    {r.tanggal}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-lg font-bold">
+          Achievements ({unlockedAch.length}/{ACHIEVEMENTS.length})
+        </h2>
+        {unlockedAch.length > 0 && (
+          <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+            {unlockedAch.map((a) => (
+              <BadgeCard key={a.id} a={a} unlocked />
+            ))}
+          </div>
+        )}
+        <details className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4">
+          <summary className="cursor-pointer text-sm font-semibold">
+            Lihat badge yang belum terbuka ({lockedAch.length})
+          </summary>
+          <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mt-3">
+            {lockedAch.map((a) => (
+              <BadgeCard key={a.id} a={a} unlocked={false} />
+            ))}
+          </div>
+        </details>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-lg font-bold">Heatmap 24 Minggu</h2>
         <div className="space-y-3">
           {PROGRAM.map((week) => (
             <div
@@ -110,9 +257,10 @@ export default function ProgresPage() {
                   const isDone =
                     !!progress?.completedDays[dayKey(week.minggu, idx)];
                   return (
-                    <div
+                    <Link
                       key={idx}
-                      className={`aspect-square rounded-md flex flex-col items-center justify-center text-xs ${
+                      href={`/jadwal/${week.minggu}/${idx}`}
+                      className={`aspect-square rounded-md flex flex-col items-center justify-center text-xs hover:ring-2 hover:ring-[var(--accent)] transition ${
                         isDone
                           ? "bg-emerald-500 text-black"
                           : day.isRest
@@ -125,7 +273,7 @@ export default function ProgresPage() {
                         {HARI_SINGKAT[idx]}
                       </span>
                       {isDone && <span className="text-[10px]">✓</span>}
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
@@ -134,11 +282,41 @@ export default function ProgresPage() {
         </div>
       </section>
 
+      <section className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 space-y-3">
+        <h2 className="font-bold">Backup & Restore Data</h2>
+        <p className="text-sm text-[var(--muted)]">
+          Data progres tersimpan di browser ini. Untuk amannya, download
+          backup berkala — bisa di-restore kalau browser di-reset / ganti HP.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={downloadBackup}
+            className="text-sm px-4 py-2 rounded-full bg-[var(--accent)] text-black font-medium hover:opacity-90"
+          >
+            ⬇ Download Backup (JSON)
+          </button>
+          <label className="text-sm px-4 py-2 rounded-full border border-[var(--border)] hover:border-[var(--accent)] cursor-pointer">
+            ⬆ Restore dari Backup
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="application/json"
+              onChange={handleImport}
+              className="hidden"
+            />
+          </label>
+        </div>
+        {importMsg && (
+          <p className="text-sm text-[var(--accent)]">{importMsg}</p>
+        )}
+      </section>
+
       <section className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5">
-        <h2 className="font-bold mb-2">Reset Data</h2>
+        <h2 className="font-bold mb-2">Reset Progres</h2>
         <p className="text-sm text-[var(--muted)] mb-3">
-          Hapus semua data progres yang tersimpan di browser ini. Tidak bisa
-          dikembalikan.
+          Hapus checklist hari & set saja. Ukuran, foto, jurnal, PR, dan
+          badge tetap aman.
         </p>
         {!confirmReset ? (
           <button
@@ -159,7 +337,7 @@ export default function ProgresPage() {
               }}
               className="text-sm px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600"
             >
-              Yakin, hapus semua
+              Yakin, hapus
             </button>
             <button
               type="button"
@@ -171,6 +349,49 @@ export default function ProgresPage() {
           </div>
         )}
       </section>
+
+      <section className="bg-red-500/5 border border-red-500/30 rounded-2xl p-5">
+        <h2 className="font-bold mb-2 text-red-300">Hapus Semua Data</h2>
+        <p className="text-sm text-[var(--muted)] mb-3">
+          Hapus progres, ukuran, foto, jurnal, PR, badge — semua. Cocok kalau
+          ingin mulai dari nol total.
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            if (
+              !confirm(
+                "Yakin hapus SEMUA data (progres, ukuran, foto, jurnal, PR, badge)? Tidak bisa dikembalikan.",
+              )
+            )
+              return;
+            localStorage.clear();
+            window.location.reload();
+          }}
+          className="text-sm px-4 py-2 rounded-full border border-red-500 text-red-300 hover:bg-red-500 hover:text-white transition-colors"
+        >
+          Hapus Semua
+        </button>
+      </section>
+    </div>
+  );
+}
+
+function BadgeCard({ a, unlocked }: { a: Achievement; unlocked: boolean }) {
+  return (
+    <div
+      className={`rounded-lg border p-3 text-center ${
+        unlocked
+          ? "border-[var(--accent)] bg-[var(--accent)]/10"
+          : "border-[var(--border)] bg-[var(--card)] opacity-50"
+      }`}
+      title={a.deskripsi}
+    >
+      <div className={`text-2xl ${unlocked ? "" : "grayscale"}`}>{a.icon}</div>
+      <p className="text-xs font-semibold mt-1 line-clamp-2">{a.nama}</p>
+      <p className="text-[10px] text-[var(--muted)] line-clamp-2 mt-0.5">
+        {a.deskripsi}
+      </p>
     </div>
   );
 }
@@ -192,7 +413,6 @@ function countStreak(progress: Progress | null): number {
     if (diff === 1) streak++;
     else break;
   }
-  // Check streak still relevant (last entry within last 2 days)
   const lastDate = new Date(unique[unique.length - 1]);
   const today = new Date();
   const diffFromToday = Math.round(

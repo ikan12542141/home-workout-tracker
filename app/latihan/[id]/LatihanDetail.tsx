@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getExercise } from "@/lib/exercises";
+import VideoEmbed from "@/components/VideoEmbed";
 
 export default function LatihanDetail({ id }: { id: string }) {
   const ex = getExercise(id);
@@ -36,6 +37,13 @@ export default function LatihanDetail({ id }: { id: string }) {
       </div>
 
       <p className="text-[var(--muted)] leading-relaxed">{ex.deskripsi}</p>
+
+      {ex.videoEmbedId && (
+        <section>
+          <h2 className="text-lg font-bold mb-2">🎥 Video Demo</h2>
+          <VideoEmbed videoId={ex.videoEmbedId} title={ex.nama} />
+        </section>
+      )}
 
       <section>
         <h2 className="text-lg font-bold mb-2">📋 Cara Melakukan</h2>

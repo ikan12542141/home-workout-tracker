@@ -1,3 +1,5 @@
+import BudgetCalculator from "./BudgetCalculator";
+
 function calcTDEE(berat: number, tinggi: number, umur: number): number {
   // Mifflin-St Jeor (Pria, sedentary→light active multiplier)
   const bmr = 10 * berat + 6.25 * tinggi - 5 * umur + 5;
@@ -173,6 +175,8 @@ export default function NutrisiPage() {
           mingguan. Kalau berat tidak naik dalam 2 minggu, tambah porsi nasi.
         </div>
       </section>
+
+      <BudgetCalculator />
 
       <section className="bg-amber-500/10 border border-amber-500/30 text-amber-100 rounded-2xl p-5">
         <h2 className="font-bold mb-2">⚠️ Disclaimer</h2>

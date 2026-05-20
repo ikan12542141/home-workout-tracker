@@ -1,3 +1,5 @@
+import { DIY_PROJECTS } from "@/lib/diy-equipment";
+
 type AlatItem = {
   nama: string;
   status: "harus punya" | "alternatif rumah" | "opsional";
@@ -140,6 +142,74 @@ export default function AlatPage() {
           </div>
         </section>
       ))}
+
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-lg font-bold">🔨 DIY: Bikin Alat Sendiri (Hemat)</h2>
+          <p className="text-sm text-[var(--muted)]">
+            Tutorial bikin alat fitness sendiri dari barang rumah / material
+            murah. Bisa hemat 70-90% dibanding beli baru.
+          </p>
+        </div>
+        <div className="space-y-3">
+          {DIY_PROJECTS.map((p) => (
+            <details
+              key={p.id}
+              className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 group"
+            >
+              <summary className="cursor-pointer flex items-baseline justify-between gap-3 list-none">
+                <div>
+                  <h3 className="font-semibold group-open:text-[var(--accent)]">
+                    {p.nama}
+                  </h3>
+                  <p className="text-xs text-[var(--muted)] mt-1">
+                    {p.deskripsi}
+                  </p>
+                </div>
+                <div className="text-right text-xs whitespace-nowrap">
+                  <p className="text-emerald-400 font-semibold">
+                    {p.estimasiHarga}
+                  </p>
+                  <p className="text-[var(--muted)] line-through">
+                    vs {p.hargaAlatBeli}
+                  </p>
+                </div>
+              </summary>
+              <div className="mt-4 space-y-3 border-t border-[var(--border)] pt-3">
+                <p className="text-xs text-[var(--muted)]">
+                  ⏱️ Waktu: {p.waktu} · Pengganti: {p.gantiAlat}
+                </p>
+                <div>
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)] mb-1">
+                    Bahan
+                  </h4>
+                  <ul className="list-disc pl-5 text-sm space-y-0.5">
+                    {p.bahan.map((b, i) => (
+                      <li key={i}>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)] mb-1">
+                    Langkah
+                  </h4>
+                  <ol className="list-decimal pl-5 text-sm space-y-1">
+                    {p.langkah.map((l, i) => (
+                      <li key={i}>{l}</li>
+                    ))}
+                  </ol>
+                </div>
+                {p.alternatif && (
+                  <div className="bg-amber-500/10 border border-amber-500/30 text-amber-100 rounded-lg px-3 py-2 text-xs">
+                    <span className="font-medium">Alternatif lebih cepat:</span>{" "}
+                    {p.alternatif}
+                  </div>
+                )}
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
 
       <section className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5">
         <h2 className="font-bold mb-2">💸 Saran Belanja Bertahap</h2>

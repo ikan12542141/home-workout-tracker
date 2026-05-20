@@ -28,7 +28,7 @@ function calcCurrentWeek(startDate: string): number {
       (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24),
     );
     const w = Math.floor(diffDays / 7) + 1;
-    return Math.max(1, Math.min(4, w));
+    return Math.max(1, Math.min(24, w));
   } catch {
     return 1;
   }
