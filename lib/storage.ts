@@ -1,5 +1,7 @@
 "use client";
 
+import { triggerAutoSync } from "./auto-sync";
+
 const STORAGE_KEY = "hwt-progress-v1";
 const PROFILE_KEY = "hwt-profile-v1";
 const MEASUREMENTS_KEY = "hwt-measurements-v1";
@@ -97,6 +99,7 @@ export function loadProgress(): Progress {
 
 export function saveProgress(p: Progress): void {
   writeJSON(STORAGE_KEY, p);
+  triggerAutoSync();
 }
 
 export function toggleDayComplete(dayKey: string): Progress {
@@ -137,6 +140,7 @@ export function loadProfile(): Profile {
 
 export function saveProfile(p: Profile): void {
   writeJSON(PROFILE_KEY, p);
+  triggerAutoSync();
 }
 
 // =========== MEASUREMENTS ===========
@@ -147,6 +151,7 @@ export function loadMeasurements(): Measurement[] {
 
 export function saveMeasurements(arr: Measurement[]): void {
   writeJSON(MEASUREMENTS_KEY, arr);
+  triggerAutoSync();
 }
 
 export function addMeasurement(m: Measurement): Measurement[] {
@@ -176,6 +181,7 @@ export function loadPhotos(): Photo[] {
 
 export function savePhotos(arr: Photo[]): void {
   writeJSON(PHOTOS_KEY, arr);
+  triggerAutoSync();
 }
 
 export function addPhoto(p: Photo): Photo[] {
@@ -200,6 +206,7 @@ export function loadJournal(): JournalEntry[] {
 
 export function saveJournal(arr: JournalEntry[]): void {
   writeJSON(JOURNAL_KEY, arr);
+  triggerAutoSync();
 }
 
 export function addJournalEntry(e: JournalEntry): JournalEntry[] {
@@ -229,6 +236,7 @@ export function loadRecords(): PersonalRecord[] {
 
 export function saveRecords(arr: PersonalRecord[]): void {
   writeJSON(RECORDS_KEY, arr);
+  triggerAutoSync();
 }
 
 /** Submit a new record. If it's better than existing for this exercise, update. Returns the updated list and a flag. */
@@ -271,6 +279,7 @@ export function loadAchievements(): Record<string, AchievementUnlock> {
 
 export function saveAchievements(map: Record<string, AchievementUnlock>): void {
   writeJSON(ACHIEVEMENTS_KEY, map);
+  triggerAutoSync();
 }
 
 export function unlockAchievement(id: string): boolean {

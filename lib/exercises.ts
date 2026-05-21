@@ -111,7 +111,7 @@ export const EXERCISES: Exercise[] = [
       "Persiapan untuk handstand push-up. Bagus untuk bentuk bahu bulat.",
       "Posisi kaki bisa lebih dekat ke tangan untuk versi lebih sulit.",
     ],
-    videoEmbedId: "x7_NgEv25H4",
+    videoEmbedId: "paCOGgmLCA0",
     prMetric: "reps",
   },
   {
@@ -193,7 +193,7 @@ export const EXERCISES: Exercise[] = [
       "Alternatif: pakai gagang sapu di antara 2 kursi yang stabil.",
     ],
     videoUrl: "https://www.youtube.com/results?search_query=inverted+row+at+home+table",
-    videoEmbedId: "dvkIaarnf0I",
+    videoEmbedId: "2Synad5Yo-g",
     prMetric: "reps",
   },
   {
@@ -431,6 +431,7 @@ export const EXERCISES: Exercise[] = [
       "Hari istirahat bukan berarti rebahan total — gerakan ringan justru bantu recovery.",
       "Stretching bahu, leher, hip flexor, hamstring penting kalau sering duduk.",
     ],
+    videoEmbedId: "c4DAnQ6DtF8",
   },
   // ====== ADVANCED EXERCISES (Week 5-24) ======
   {
@@ -468,7 +469,7 @@ export const EXERCISES: Exercise[] = [
       "Mulai dengan jangkauan kecil dulu, perlebar bertahap.",
       "Persiapan untuk one-arm push-up dalam 6-12 bulan.",
     ],
-    videoEmbedId: "tu0YQA62OQE",
+    videoEmbedId: "MxVbNel13Ek",
     prMetric: "reps",
   },
   {
@@ -486,6 +487,7 @@ export const EXERCISES: Exercise[] = [
       "Naikkan beban 1-2 kg setiap kali 3×12 rep terasa mudah.",
       "Jaga form — lebih baik kurang beban tapi gerakan full.",
     ],
+    videoEmbedId: "hXTc1mDnZCw",
     prMetric: "reps",
   },
   {
@@ -505,7 +507,7 @@ export const EXERCISES: Exercise[] = [
       "5-8 negative per set sudah sangat berat.",
       "Setelah bisa 3×5 negative slow control, coba 1 pull-up murni.",
     ],
-    videoEmbedId: "f6BHbWVypHs",
+    videoEmbedId: "gbPURTSxQLY",
     prMetric: "reps",
   },
   {
@@ -583,7 +585,7 @@ export const EXERCISES: Exercise[] = [
       "5 detik hold sudah keras. Progres pelan-pelan.",
       "Bisa pakai dua kursi sebagai parallette.",
     ],
-    videoEmbedId: "TfQuSluZBgQ",
+    videoEmbedId: "IUZJoSP66HI",
     prMetric: "durasi-detik",
   },
   {
@@ -602,7 +604,7 @@ export const EXERCISES: Exercise[] = [
       "Mulai 10-15 detik. Goal 60 detik di bulan ke-4.",
       "Latihan ini sangat bagus untuk bahu bulat & posture.",
     ],
-    videoEmbedId: "BS8WS-LP2_o",
+    videoEmbedId: "2v1YDTzMcO8",
     prMetric: "durasi-detik",
   },
   {
@@ -640,6 +642,7 @@ export const EXERCISES: Exercise[] = [
       "Tambah beban perlahan — kaki cepat adaptasi.",
       "Squat + protein = metabolisme naik = perut rata.",
     ],
+    videoEmbedId: "jGUXhDyUsmQ",
     prMetric: "reps",
   },
   {
@@ -678,7 +681,7 @@ export const EXERCISES: Exercise[] = [
       "Pelan-pelan banget. Fokus mind-muscle connection.",
       "Ini adalah favorit Arnold Schwarzenegger untuk bisep tinggi.",
     ],
-    videoEmbedId: "Pwq-Rrm-3WI",
+    videoEmbedId: "bQghTsfCiMw",
     prMetric: "reps",
   },
   {
@@ -696,6 +699,7 @@ export const EXERCISES: Exercise[] = [
       "Versi tanpa-bench dari preacher curl di gym.",
       "Bagus banget untuk peak bisep.",
     ],
+    videoEmbedId: "7v7uldi1eLU",
     prMetric: "reps",
   },
   {
@@ -713,6 +717,7 @@ export const EXERCISES: Exercise[] = [
       "Maksimum tension ke tricep.",
       "Hanya lakukan setelah diamond push-up biasa terasa mudah.",
     ],
+    videoEmbedId: "J0DnG1_S92I",
     prMetric: "reps",
   },
   {
@@ -731,7 +736,7 @@ export const EXERCISES: Exercise[] = [
       "Sangat advanced. Coba setelah bulan 4.",
       "Mulai dari 5 detik. Goal 30 detik.",
     ],
-    videoEmbedId: "lJ4OLAv-itk",
+    videoEmbedId: "BwhZYpIdhro",
     prMetric: "durasi-detik",
   },
   {
@@ -769,7 +774,7 @@ export const EXERCISES: Exercise[] = [
       "Progres: tuck (lutut ditekuk) → straddle → full straight.",
       "5 rep sudah luar biasa berat.",
     ],
-    videoEmbedId: "UFm-fp42aE0",
+    videoEmbedId: "At0mMAHqWrQ",
     prMetric: "reps",
   },
   {
@@ -788,7 +793,7 @@ export const EXERCISES: Exercise[] = [
       "Hanya setelah bisa 15 push-up murni.",
       "Clap push-up versi lebih sulit — coba kalau sudah expert.",
     ],
-    videoEmbedId: "lp-ZUf69rgo",
+    videoEmbedId: "FRo3b_Pfw3M",
     prMetric: "reps",
   },
   {
@@ -806,6 +811,7 @@ export const EXERCISES: Exercise[] = [
       "Hanya untuk fase advanced (bulan 5-6).",
       "5 rep sudah membakar.",
     ],
+    videoEmbedId: "qLBImHhCXSw",
     prMetric: "reps",
   },
   {
