@@ -234,7 +234,7 @@ export default function BackupPage() {
                   Di &quot;Authorized JavaScript origins&quot; tambahkan:
                   <br />
                   <code className="bg-[var(--border)] px-1.5 py-0.5 rounded text-xs">
-                    https://home-workout-tracker-lyart.vercel.app
+                    https://workoutfer.vercel.app
                   </code>
                   <br />
                   <span className="text-xs">(dan <code className="bg-[var(--border)] px-1.5 py-0.5 rounded text-xs">http://localhost:3000</code> untuk testing lokal)</span>

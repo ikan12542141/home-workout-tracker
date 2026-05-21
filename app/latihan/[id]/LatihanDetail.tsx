@@ -91,6 +91,46 @@ export default function LatihanDetail({ id }: { id: string }) {
         </div>
       </section>
 
+      {ex.alternatifTanpaAlat && (
+        <section className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-4 sm:p-5 space-y-4">
+          <div>
+            <h2 className="text-lg font-bold text-emerald-400">
+              🔄 Alternatif Tanpa Alat
+            </h2>
+            <p className="text-xs text-[var(--muted)] mt-1">
+              Tidak punya {ex.alat.filter((a) => a === "kursi / meja").length > 0 ? "kursi/meja" : "alat"}? Coba latihan ini:
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-emerald-300">
+              {ex.alternatifTanpaAlat.nama}
+            </h3>
+            <p className="text-sm text-[var(--muted)] mt-1">
+              {ex.alternatifTanpaAlat.deskripsi}
+            </p>
+          </div>
+          {ex.alternatifTanpaAlat.videoEmbedId && (
+            <VideoEmbed
+              videoId={ex.alternatifTanpaAlat.videoEmbedId}
+              title={ex.alternatifTanpaAlat.nama}
+            />
+          )}
+          <ol className="space-y-2">
+            {ex.alternatifTanpaAlat.langkah.map((l, i) => (
+              <li
+                key={i}
+                className="flex gap-3 bg-[var(--background)]/50 border border-emerald-500/20 rounded-xl p-3"
+              >
+                <span className="font-mono text-sm text-emerald-400 shrink-0">
+                  {i + 1}
+                </span>
+                <span className="text-sm">{l}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
       {ex.videoUrl && (
         <a
           href={ex.videoUrl}
