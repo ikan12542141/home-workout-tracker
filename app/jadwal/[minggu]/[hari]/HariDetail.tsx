@@ -11,6 +11,9 @@ import {
   submitRecord,
   toggleDayComplete,
   toggleSetComplete,
+  loadAltPrefs,
+  toggleAltPref,
+  type AltPrefs,
   type PersonalRecord,
   type Progress,
 } from "@/lib/storage";
@@ -44,10 +47,12 @@ export default function HariDetail({
   const [openExercise, setOpenExercise] = useState<string | null>(null);
   const [prInput, setPrInput] = useState<Record<string, string>>({});
   const [prFlash, setPrFlash] = useState<string | null>(null);
+  const [altPrefs, setAltPrefs] = useState<AltPrefs>({});
 
   useEffect(() => {
     setProgress(loadProgress());
     setRecords(loadRecords());
+    setAltPrefs(loadAltPrefs());
   }, []);
 
   if (!week || !day || Number.isNaN(mingguN) || Number.isNaN(hariN)) {
@@ -141,19 +146,32 @@ export default function HariDetail({
             {day.latihan.map((s, exerciseIdx) => {
               const ex = getExercise(s.exerciseId);
               if (!ex) return null;
+              const useAlt = !!altPrefs[ex.id] && !!ex.alternatifTanpaAlat;
+              const alt = ex.alternatifTanpaAlat;
+              const displayName = useAlt && alt ? alt.nama : ex.nama;
+              const displayVideo = useAlt && alt?.videoEmbedId ? alt.videoEmbedId : ex.videoEmbedId;
               return (
                 <div
                   key={`${s.exerciseId}-${exerciseIdx}`}
-                  className="bg-[var(--card)] border border-[var(--border)] rounded-2xl overflow-hidden"
+                  className={`bg-[var(--card)] border rounded-2xl overflow-hidden ${
+                    useAlt ? "border-emerald-500/40" : "border-[var(--border)]"
+                  }`}
                 >
                   <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-[var(--border)]">
                     <div>
-                      <Link
-                        href={`/latihan/${ex.id}`}
-                        className="font-semibold hover:text-[var(--accent)] transition-colors"
-                      >
-                        {ex.nama}
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/latihan/${ex.id}`}
+                          className="font-semibold hover:text-[var(--accent)] transition-colors"
+                        >
+                          {displayName}
+                        </Link>
+                        {useAlt && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-medium">
+                            alternatif
+                          </span>
+                        )}
+                      </div>
                       <div className="text-xs text-[var(--muted)] mt-0.5">
                         {ex.kategori.join(" · ")}
                       </div>
@@ -203,6 +221,22 @@ export default function HariDetail({
                     >
                       {openExercise === ex.id ? "➖ Tutup" : "⏱️ Timer + Video"}
                     </button>
+                    {alt && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = toggleAltPref(ex.id);
+                          setAltPrefs({ ...updated });
+                        }}
+                        className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+                          useAlt
+                            ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25"
+                            : "border-[var(--border)] text-[var(--muted)] hover:text-emerald-400 hover:border-emerald-500/40"
+                        }`}
+                      >
+                        {useAlt ? "↩ Pakai Versi Asli" : "🔄 Tanpa Alat"}
+                      </button>
+                    )}
                     {ex.prMetric && (
                       <span className="text-xs px-2 py-1 rounded-full bg-[var(--background)] border border-[var(--border)] text-[var(--muted)] font-mono">
                         PR: {records.find((r) => r.exerciseId === ex.id)?.value ?? "-"}{" "}
@@ -216,8 +250,22 @@ export default function HariDetail({
                         initialSeconds={parseRestSeconds(s.istirahat)}
                         label={`Istirahat: ${s.istirahat}`}
                       />
-                      {ex.videoEmbedId && (
-                        <VideoEmbed videoId={ex.videoEmbedId} title={ex.nama} />
+                      {useAlt && alt && (
+                        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 space-y-2">
+                          <p className="text-xs font-semibold text-emerald-400">Alternatif: {alt.nama}</p>
+                          <p className="text-xs text-[var(--muted)]">{alt.deskripsi}</p>
+                          <ol className="space-y-1">
+                            {alt.langkah.map((l, i) => (
+                              <li key={i} className="text-xs text-[var(--muted)] flex gap-2">
+                                <span className="text-emerald-400 font-mono shrink-0">{i + 1}.</span>
+                                <span>{l}</span>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+                      )}
+                      {displayVideo && (
+                        <VideoEmbed videoId={displayVideo} title={displayName} />
                       )}
                       {ex.prMetric && (
                         <div className="space-y-2">

@@ -290,6 +290,29 @@ export function unlockAchievement(id: string): boolean {
   return true;
 }
 
+// =========== ALTERNATIVE EXERCISE PREFERENCES ===========
+
+const ALT_PREFS_KEY = "hwt-alt-prefs-v1";
+
+/** Map of exerciseId → true if user prefers the no-equipment alternative */
+export type AltPrefs = Record<string, boolean>;
+
+export function loadAltPrefs(): AltPrefs {
+  return readJSON<AltPrefs>(ALT_PREFS_KEY, {});
+}
+
+export function saveAltPrefs(prefs: AltPrefs): void {
+  writeJSON(ALT_PREFS_KEY, prefs);
+  triggerAutoSync();
+}
+
+export function toggleAltPref(exerciseId: string): AltPrefs {
+  const prefs = loadAltPrefs();
+  prefs[exerciseId] = !prefs[exerciseId];
+  saveAltPrefs(prefs);
+  return prefs;
+}
+
 // =========== EXPORT / IMPORT ===========
 
 export type FullBackup = {
@@ -302,6 +325,7 @@ export type FullBackup = {
   journal: JournalEntry[];
   records: PersonalRecord[];
   achievements: Record<string, AchievementUnlock>;
+  altPrefs?: AltPrefs;
 };
 
 export function exportAllData(): FullBackup {
@@ -315,6 +339,7 @@ export function exportAllData(): FullBackup {
     journal: loadJournal(),
     records: loadRecords(),
     achievements: loadAchievements(),
+    altPrefs: loadAltPrefs(),
   };
 }
 
@@ -327,4 +352,5 @@ export function importAllData(backup: FullBackup): void {
   saveJournal(backup.journal);
   saveRecords(backup.records);
   saveAchievements(backup.achievements);
+  if (backup.altPrefs) saveAltPrefs(backup.altPrefs);
 }
