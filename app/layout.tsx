@@ -34,6 +34,7 @@ const NAV_ITEMS = [
   { href: "/jurnal", label: "Jurnal" },
   { href: "/alat", label: "Alat" },
   { href: "/nutrisi", label: "Nutrisi" },
+  { href: "/backup", label: "Backup" },
 ];
 
 export default function RootLayout({

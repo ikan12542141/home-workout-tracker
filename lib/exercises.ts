@@ -17,6 +17,13 @@ export type Equipment =
   | "kursi / meja"
   | "matras";
 
+export type AlternatifTanpaAlat = {
+  nama: string;
+  deskripsi: string;
+  langkah: string[];
+  videoEmbedId?: string;
+};
+
 export type Exercise = {
   id: string;
   nama: string;
@@ -24,6 +31,7 @@ export type Exercise = {
   alat: Equipment[];
   deskripsi: string;
   langkah: string[];
+  kesalahanUmum?: string[];
   tips: string[];
   videoUrl?: string;
   /** YouTube video ID (just the ID, not full URL) — used for embed player */
@@ -31,6 +39,8 @@ export type Exercise = {
   gambar?: string;
   /** Used for Personal Records: if defined, this is the metric tracked */
   prMetric?: "reps" | "durasi-detik";
+  /** Alternative exercise without furniture (kursi/meja) */
+  alternatifTanpaAlat?: AlternatifTanpaAlat;
 };
 
 export const EXERCISES: Exercise[] = [
@@ -111,7 +121,7 @@ export const EXERCISES: Exercise[] = [
       "Persiapan untuk handstand push-up. Bagus untuk bentuk bahu bulat.",
       "Posisi kaki bisa lebih dekat ke tangan untuk versi lebih sulit.",
     ],
-    videoEmbedId: "x7_NgEv25H4",
+    videoEmbedId: "paCOGgmLCA0",
     prMetric: "reps",
   },
   {
@@ -133,6 +143,18 @@ export const EXERCISES: Exercise[] = [
     ],
     videoEmbedId: "6kALZikXxLc",
     prMetric: "reps",
+    alternatifTanpaAlat: {
+      nama: "Floor Tricep Extension (Bodyweight Skull Crusher)",
+      deskripsi: "Latihan tricep di lantai tanpa alat apapun — sama efektifnya dengan tricep dip.",
+      langkah: [
+        "POSISI AWAL: Posisi push-up, tapi tangan agak lebih maju ke depan dari bahu.",
+        "TURUN: Tekuk SIKU saja (bukan bahu), turunkan lengan bawah ke lantai. Siku mengarah ke depan.",
+        "Lengan atas tetap diam — hanya lengan bawah yang bergerak turun sampai menyentuh lantai.",
+        "NAIK: Tekan dengan tricep, luruskan siku kembali ke posisi awal.",
+        "Semakin jauh tangan dari bahu = semakin mudah. Geser tangan lebih dekat untuk lebih berat.",
+      ],
+      videoEmbedId: "fTQ5SSBi0FU",
+    },
   },
   {
     id: "bicep-curl-botol",
@@ -193,8 +215,20 @@ export const EXERCISES: Exercise[] = [
       "Alternatif: pakai gagang sapu di antara 2 kursi yang stabil.",
     ],
     videoUrl: "https://www.youtube.com/results?search_query=inverted+row+at+home+table",
-    videoEmbedId: "dvkIaarnf0I",
+    videoEmbedId: "2Synad5Yo-g",
     prMetric: "reps",
+    alternatifTanpaAlat: {
+      nama: "Prone Y-T-W Raise (Telungkup di Lantai)",
+      deskripsi: "Latihan punggung & bahu di lantai tanpa alat. Melatih otot yang sama dengan inverted row.",
+      langkah: [
+        "POSISI: Telungkup di lantai, dahi di handuk/bantal kecil. Lengan lurus di samping.",
+        "Y-RAISE: Angkat kedua tangan ke atas membentuk huruf Y (jempol ke atas). Tahan 2 detik, turunkan.",
+        "T-RAISE: Angkat kedua tangan ke samping membentuk huruf T. Tahan 2 detik, turunkan.",
+        "W-RAISE: Tekuk siku 90°, angkat membentuk huruf W. Peras scapula. Tahan 2 detik, turunkan.",
+        "Lakukan 8-12 rep per huruf. Fokus pada peras otot punggung, bukan kecepatan.",
+      ],
+      videoEmbedId: "QdGTI4Lshg4",
+    },
   },
   {
     id: "resistance-band-row",
@@ -431,6 +465,7 @@ export const EXERCISES: Exercise[] = [
       "Hari istirahat bukan berarti rebahan total — gerakan ringan justru bantu recovery.",
       "Stretching bahu, leher, hip flexor, hamstring penting kalau sering duduk.",
     ],
+    videoEmbedId: "c4DAnQ6DtF8",
   },
   // ====== ADVANCED EXERCISES (Week 5-24) ======
   {
@@ -451,6 +486,17 @@ export const EXERCISES: Exercise[] = [
     ],
     videoEmbedId: "SKPab2YC8BE",
     prMetric: "reps",
+    alternatifTanpaAlat: {
+      nama: "Pike Push-up (Kaki di Lantai)",
+      deskripsi: "Push-up dengan pinggul tinggi — menarget bahu & dada atas sama seperti decline, tanpa butuh kursi.",
+      langkah: [
+        "POSISI: Bentuk huruf V terbalik — tangan & kaki di lantai, pinggul tinggi ke atas.",
+        "Kaki selebar bahu, tangan selebar bahu. Jaga kaki & lengan lurus.",
+        "TURUN: Tekuk siku, turunkan kepala ke arah lantai di antara kedua tangan.",
+        "NAIK: Dorong kembali ke posisi V. Semakin dekat kaki ke tangan = semakin berat.",
+      ],
+      videoEmbedId: "paCOGgmLCA0",
+    },
   },
   {
     id: "archer-push-up",
@@ -468,7 +514,7 @@ export const EXERCISES: Exercise[] = [
       "Mulai dengan jangkauan kecil dulu, perlebar bertahap.",
       "Persiapan untuk one-arm push-up dalam 6-12 bulan.",
     ],
-    videoEmbedId: "tu0YQA62OQE",
+    videoEmbedId: "MxVbNel13Ek",
     prMetric: "reps",
   },
   {
@@ -486,7 +532,18 @@ export const EXERCISES: Exercise[] = [
       "Naikkan beban 1-2 kg setiap kali 3×12 rep terasa mudah.",
       "Jaga form — lebih baik kurang beban tapi gerakan full.",
     ],
+    videoEmbedId: "hXTc1mDnZCw",
     prMetric: "reps",
+    alternatifTanpaAlat: {
+      nama: "Backpack Bent-over Row (Berdiri)",
+      deskripsi: "Row dengan backpack berat tanpa butuh meja — berdiri membungkuk dan tarik tas.",
+      langkah: [
+        "PERSIAPAN: Isi backpack dengan buku/botol (5-15 kg). Pegang strap tas dengan kedua tangan.",
+        "POSISI: Berdiri, kaki selebar bahu. Bungkuk ke depan ~45° dengan punggung LURUS.",
+        "TARIK: Buang napas, tarik tas ke arah perut. Peras scapula di atas. Tahan 1 detik.",
+        "TURUN: Tarik napas, turunkan pelan 2-3 detik.",
+      ],
+    },
   },
   {
     id: "negative-pull-up",
@@ -505,7 +562,7 @@ export const EXERCISES: Exercise[] = [
       "5-8 negative per set sudah sangat berat.",
       "Setelah bisa 3×5 negative slow control, coba 1 pull-up murni.",
     ],
-    videoEmbedId: "f6BHbWVypHs",
+    videoEmbedId: "gbPURTSxQLY",
     prMetric: "reps",
   },
   {
@@ -583,7 +640,7 @@ export const EXERCISES: Exercise[] = [
       "5 detik hold sudah keras. Progres pelan-pelan.",
       "Bisa pakai dua kursi sebagai parallette.",
     ],
-    videoEmbedId: "TfQuSluZBgQ",
+    videoEmbedId: "IUZJoSP66HI",
     prMetric: "durasi-detik",
   },
   {
@@ -602,7 +659,7 @@ export const EXERCISES: Exercise[] = [
       "Mulai 10-15 detik. Goal 60 detik di bulan ke-4.",
       "Latihan ini sangat bagus untuk bahu bulat & posture.",
     ],
-    videoEmbedId: "BS8WS-LP2_o",
+    videoEmbedId: "2v1YDTzMcO8",
     prMetric: "durasi-detik",
   },
   {
@@ -624,6 +681,17 @@ export const EXERCISES: Exercise[] = [
     ],
     videoEmbedId: "vq5-vdgJc0I",
     prMetric: "reps",
+    alternatifTanpaAlat: {
+      nama: "Assisted Pistol Squat (Pegangan Tembok/Kusen Pintu)",
+      deskripsi: "Pistol squat dengan pegangan tembok atau kusen pintu sebagai pengganti kursi.",
+      langkah: [
+        "Berdiri di samping tembok atau kusen pintu. Pegang dengan satu tangan.",
+        "Angkat satu kaki lurus ke depan.",
+        "TURUN: Jongkok dengan satu kaki, gunakan pegangan tembok untuk keseimbangan.",
+        "Turunkan serendah mungkin. NAIK: Dorong ke atas dengan kekuatan kaki.",
+        "Kurangi pegangan secara bertahap sampai bisa tanpa bantuan.",
+      ],
+    },
   },
   {
     id: "weighted-squat",
@@ -640,6 +708,7 @@ export const EXERCISES: Exercise[] = [
       "Tambah beban perlahan — kaki cepat adaptasi.",
       "Squat + protein = metabolisme naik = perut rata.",
     ],
+    videoEmbedId: "jGUXhDyUsmQ",
     prMetric: "reps",
   },
   {
@@ -660,6 +729,18 @@ export const EXERCISES: Exercise[] = [
     ],
     videoEmbedId: "2C-uNgKwPLE",
     prMetric: "reps",
+    alternatifTanpaAlat: {
+      nama: "Reverse Lunge (Tanpa Kursi)",
+      deskripsi: "Lunge mundur melatih otot yang sama dengan Bulgarian split squat tanpa butuh kursi.",
+      langkah: [
+        "Berdiri tegak, kaki rapat.",
+        "MUNDUR: Langkahkan satu kaki ke belakang, turunkan lutut belakang mendekati lantai.",
+        "Paha depan sejajar lantai, lutut depan tidak melewati jari kaki.",
+        "NAIK: Dorong melalui tumit kaki depan, kembali berdiri.",
+        "Bergantian kaki, atau selesaikan satu sisi dulu.",
+        "Tambah backpack untuk beban tambahan.",
+      ],
+    },
   },
   {
     id: "concentration-curl",
@@ -678,7 +759,7 @@ export const EXERCISES: Exercise[] = [
       "Pelan-pelan banget. Fokus mind-muscle connection.",
       "Ini adalah favorit Arnold Schwarzenegger untuk bisep tinggi.",
     ],
-    videoEmbedId: "Pwq-Rrm-3WI",
+    videoEmbedId: "bQghTsfCiMw",
     prMetric: "reps",
   },
   {
@@ -696,7 +777,18 @@ export const EXERCISES: Exercise[] = [
       "Versi tanpa-bench dari preacher curl di gym.",
       "Bagus banget untuk peak bisep.",
     ],
+    videoEmbedId: "7v7uldi1eLU",
     prMetric: "reps",
+    alternatifTanpaAlat: {
+      nama: "Floor Concentration Curl (Duduk di Lantai)",
+      deskripsi: "Concentration curl duduk di lantai — siku ditopang oleh lutut, tidak perlu kursi.",
+      langkah: [
+        "Duduk di lantai dengan kaki ditekuk, telapak kaki rata.",
+        "Pegang dumbbell/botol dengan satu tangan. Taruh siku di bagian dalam lutut.",
+        "ANGKAT: Tekuk siku, angkat beban ke bahu. Peras bisep 1-2 detik.",
+        "TURUN: Turunkan pelan 3 detik. Ulangi, lalu pindah tangan.",
+      ],
+    },
   },
   {
     id: "diamond-pushup-feet-elevated",
@@ -713,7 +805,20 @@ export const EXERCISES: Exercise[] = [
       "Maksimum tension ke tricep.",
       "Hanya lakukan setelah diamond push-up biasa terasa mudah.",
     ],
+    videoEmbedId: "J0DnG1_S92I",
     prMetric: "reps",
+    alternatifTanpaAlat: {
+      nama: "Close-grip Diamond Push-up (di Lantai)",
+      deskripsi: "Diamond push-up biasa di lantai — tetap menarget tricep tanpa butuh kursi untuk elevasi.",
+      langkah: [
+        "Posisi push-up biasa, tangan rapat membentuk berlian (ibu jari & telunjuk menyentuh).",
+        "Tubuh lurus dari kepala ke tumit.",
+        "TURUN: Tekuk siku ke belakang, turunkan dada ke arah tangan.",
+        "NAIK: Dorong kembali ke posisi awal.",
+        "Untuk tambah intensitas: pause 3 detik di posisi bawah.",
+      ],
+      videoEmbedId: "J0DnG1_S92I",
+    },
   },
   {
     id: "tuck-front-lever",
@@ -731,7 +836,7 @@ export const EXERCISES: Exercise[] = [
       "Sangat advanced. Coba setelah bulan 4.",
       "Mulai dari 5 detik. Goal 30 detik.",
     ],
-    videoEmbedId: "lJ4OLAv-itk",
+    videoEmbedId: "BwhZYpIdhro",
     prMetric: "durasi-detik",
   },
   {
@@ -769,7 +874,7 @@ export const EXERCISES: Exercise[] = [
       "Progres: tuck (lutut ditekuk) → straddle → full straight.",
       "5 rep sudah luar biasa berat.",
     ],
-    videoEmbedId: "UFm-fp42aE0",
+    videoEmbedId: "At0mMAHqWrQ",
     prMetric: "reps",
   },
   {
@@ -788,7 +893,7 @@ export const EXERCISES: Exercise[] = [
       "Hanya setelah bisa 15 push-up murni.",
       "Clap push-up versi lebih sulit — coba kalau sudah expert.",
     ],
-    videoEmbedId: "lp-ZUf69rgo",
+    videoEmbedId: "FRo3b_Pfw3M",
     prMetric: "reps",
   },
   {
@@ -806,6 +911,7 @@ export const EXERCISES: Exercise[] = [
       "Hanya untuk fase advanced (bulan 5-6).",
       "5 rep sudah membakar.",
     ],
+    videoEmbedId: "qLBImHhCXSw",
     prMetric: "reps",
   },
   {
