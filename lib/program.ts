@@ -56,6 +56,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "pike-push-up", set: 2, reps: "5-8", istirahat: "60 detik" },
           { exerciseId: "tricep-dip-chair", set: 2, reps: "8", istirahat: "60 detik" },
           { exerciseId: "plank", set: 2, durasi: "20 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
         catatan:
@@ -72,6 +73,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "crunch", set: 3, reps: "10-12", istirahat: "45 detik" },
           { exerciseId: "leg-raise", set: 2, reps: "8", istirahat: "45 detik" },
           { exerciseId: "mountain-climber", set: 2, durasi: "30 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -82,8 +84,9 @@ export const PROGRAM: WeekProgram[] = [
         durasiTotal: "~30 menit",
         latihan: [
           { exerciseId: "walk-stretch", set: 1, durasi: "30 menit", istirahat: "-" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "10-15 per tangan (ringan)", istirahat: "30 detik" },
         ],
-        catatan: "Hari istirahat aktif. Jalan kaki + stretching. Tidak boleh skip!",
+        catatan: "Hari istirahat aktif. Jalan kaki + stretching + hand grip ringan. Tidak boleh skip!",
       },
       {
         hari: "Kamis",
@@ -113,6 +116,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "russian-twist", set: 3, reps: "12 per sisi", istirahat: "45 detik" },
           { exerciseId: "high-knees", set: 3, durasi: "30 detik", istirahat: "30 detik" },
           { exerciseId: "plank", set: 1, durasi: "30 detik", istirahat: "-" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -127,6 +131,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "knee-push-up", set: 2, reps: "10", istirahat: "60 detik" },
           { exerciseId: "bicep-curl-botol", set: 2, reps: "10", istirahat: "60 detik" },
           { exerciseId: "plank", set: 2, durasi: "25 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -158,6 +163,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "pike-push-up", set: 3, reps: "8", istirahat: "60 detik" },
           { exerciseId: "tricep-dip-chair", set: 3, reps: "10", istirahat: "60 detik" },
           { exerciseId: "plank", set: 3, durasi: "30 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15-20 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -173,6 +179,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "leg-raise", set: 3, reps: "10", istirahat: "45 detik" },
           { exerciseId: "bicycle-crunch", set: 3, reps: "12 per sisi", istirahat: "45 detik" },
           { exerciseId: "mountain-climber", set: 2, durasi: "40 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15-20 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -183,6 +190,7 @@ export const PROGRAM: WeekProgram[] = [
         durasiTotal: "~30 menit",
         latihan: [
           { exerciseId: "walk-stretch", set: 1, durasi: "30 menit", istirahat: "-" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "10-15 per tangan (ringan)", istirahat: "30 detik" },
         ],
       },
       {
@@ -211,6 +219,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "leg-raise", set: 3, reps: "10", istirahat: "45 detik" },
           { exerciseId: "high-knees", set: 4, durasi: "30 detik", istirahat: "30 detik" },
           { exerciseId: "plank", set: 1, durasi: "45 detik", istirahat: "-" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15-20 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -226,6 +235,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "bicep-curl-botol", set: 3, reps: "12", istirahat: "60 detik" },
           { exerciseId: "plank", set: 2, durasi: "30 detik", istirahat: "45 detik" },
           { exerciseId: "jumping-jack", set: 1, durasi: "60 detik", istirahat: "-" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15-20 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -256,6 +266,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "diamond-push-up", set: 2, reps: "5-8 (boleh knee)", istirahat: "60 detik" },
           { exerciseId: "tricep-dip-chair", set: 3, reps: "12", istirahat: "60 detik" },
           { exerciseId: "plank", set: 3, durasi: "40 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-hold", set: 2, durasi: "15 detik per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -272,6 +283,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "bicycle-crunch", set: 3, reps: "15 per sisi", istirahat: "45 detik" },
           { exerciseId: "russian-twist", set: 3, reps: "20 per sisi", istirahat: "45 detik" },
           { exerciseId: "mountain-climber", set: 3, durasi: "45 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-hold", set: 2, durasi: "15 detik per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -282,6 +294,7 @@ export const PROGRAM: WeekProgram[] = [
         durasiTotal: "~30 menit",
         latihan: [
           { exerciseId: "walk-stretch", set: 1, durasi: "30 menit", istirahat: "-" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "10-15 per tangan (ringan)", istirahat: "30 detik" },
         ],
       },
       {
@@ -312,6 +325,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "high-knees", set: 4, durasi: "40 detik", istirahat: "30 detik" },
           { exerciseId: "mountain-climber", set: 3, durasi: "40 detik", istirahat: "30 detik" },
           { exerciseId: "plank", set: 2, durasi: "45 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-hold", set: 2, durasi: "15 detik per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -327,6 +341,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "bicep-curl-botol", set: 3, reps: "12", istirahat: "60 detik" },
           { exerciseId: "inverted-row-meja", set: 3, reps: "8", istirahat: "60 detik" },
           { exerciseId: "plank", set: 2, durasi: "45 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-hold", set: 2, durasi: "15 detik per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -357,6 +372,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "pike-push-up", set: 3, reps: "12", istirahat: "60 detik" },
           { exerciseId: "tricep-dip-chair", set: 4, reps: "15", istirahat: "60 detik" },
           { exerciseId: "plank", set: 3, durasi: "60 detik", istirahat: "60 detik" },
+          { exerciseId: "hand-grip-hold", set: 2, durasi: "20 detik per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -373,6 +389,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "bicycle-crunch", set: 3, reps: "20 per sisi", istirahat: "45 detik" },
           { exerciseId: "russian-twist", set: 3, reps: "25 per sisi", istirahat: "45 detik" },
           { exerciseId: "mountain-climber", set: 3, durasi: "60 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-hold", set: 2, durasi: "20 detik per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -383,6 +400,7 @@ export const PROGRAM: WeekProgram[] = [
         durasiTotal: "~30 menit",
         latihan: [
           { exerciseId: "walk-stretch", set: 1, durasi: "30 menit", istirahat: "-" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "10-15 per tangan (ringan)", istirahat: "30 detik" },
         ],
       },
       {
@@ -412,6 +430,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "high-knees", set: 5, durasi: "45 detik", istirahat: "30 detik" },
           { exerciseId: "mountain-climber", set: 4, durasi: "45 detik", istirahat: "30 detik" },
           { exerciseId: "plank", set: 2, durasi: "60 detik", istirahat: "45 detik" },
+          { exerciseId: "hand-grip-hold", set: 2, durasi: "20 detik per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
       },
@@ -428,6 +447,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "inverted-row-meja", set: 3, reps: "10", istirahat: "60 detik" },
           { exerciseId: "burpee", set: 2, reps: "10", istirahat: "60 detik" },
           { exerciseId: "plank", set: 1, durasi: "90 detik (target)", istirahat: "-" },
+          { exerciseId: "hand-grip-pulse", set: 2, reps: "25-30 per tangan", istirahat: "30 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
         catatan:
@@ -490,8 +510,11 @@ function restActiveDay(catatan?: string): WorkoutDay {
     fokus: "Aktif Recovery",
     isRest: true,
     durasiTotal: "~30 menit",
-    latihan: [{ exerciseId: "walk-stretch", set: 1, durasi: "30 menit", istirahat: "-" }],
-    catatan: catatan ?? "Hari istirahat aktif. Jalan kaki + stretching. Tidak boleh skip!",
+    latihan: [
+      { exerciseId: "walk-stretch", set: 1, durasi: "30 menit", istirahat: "-" },
+      { exerciseId: "hand-grip-basic", set: 2, reps: "10-15 per tangan (ringan)", istirahat: "30 detik" },
+    ],
+    catatan: catatan ?? "Hari istirahat aktif. Jalan kaki + stretching + hand grip ringan. Tidak boleh skip!",
   };
 }
 
@@ -516,12 +539,14 @@ function phase2Week(minggu: number): WorkoutDay[] {
       ["pike-push-up", 3, "8-10"],
       ["tricep-dip-chair", 3, "12-15"],
       ["plank", 3, plankSec, "45 detik"],
+      ["hand-grip-basic", 2, "15-20 per tangan", "30 detik"],
     ]),
     day("Selasa", "Core (Perut)", "~25 menit", [
       ["hollow-hold", 4, plankSec, "45 detik"],
       ["leg-raise", 4, coreReps],
       ["bicycle-crunch", 3, "20 (10 per sisi)"],
       ["side-plank", 3, "30 detik per sisi"],
+      ["hand-grip-basic", 2, "15-20 per tangan", "30 detik"],
     ]),
     restActiveDay(),
     day("Kamis", "Pull (Bisep, Punggung)", "~30 menit", [
@@ -536,12 +561,14 @@ function phase2Week(minggu: number): WorkoutDay[] {
       ["mountain-climber", 4, "40 detik", "30 detik"],
       ["jumping-jack", 4, "60 detik", "30 detik"],
       ["plank", 3, plankSec],
+      ["hand-grip-basic", 2, "15-20 per tangan", "30 detik"],
     ]),
     day("Sabtu", "Full Body", "~30 menit", [
       ["squat", 4, "15-20"],
       ["push-up", 3, pushReps],
       ["inverted-row-meja", 3, "10-12"],
       ["plank", 3, plankSec],
+      ["hand-grip-basic", 2, "15-20 per tangan", "30 detik"],
     ]),
     restTotalDay(
       w === 4 ? "Akhir Phase 2! Foto badan + ukur lengan. Bandingkan dengan minggu 1." : undefined,
@@ -560,12 +587,14 @@ function phase3Week(minggu: number): WorkoutDay[] {
       ["pike-push-up", 4, reps],
       ["diamond-push-up", 3, "8-10"],
       ["tricep-dip-chair", 3, "12-15"],
+      ["hand-grip-hold", 2, "20-30 detik per tangan", "30 detik"],
     ]),
     day("Selasa", "Core (Heavy)", "~25 menit", [
       ["hollow-hold", 4, plankSec],
       ["leg-raise", 4, "12-15"],
       ["dragon-flag-progression", 3, "5-8 (tuck)"],
       ["side-plank", 3, "40 detik per sisi"],
+      ["hand-grip-hold", 2, "20-30 detik per tangan", "30 detik"],
     ]),
     restActiveDay(),
     day("Kamis", "Pull (Strength)", "~35 menit", [
@@ -580,12 +609,14 @@ function phase3Week(minggu: number): WorkoutDay[] {
       ["mountain-climber", 4, "45 detik", "30 detik"],
       ["jumping-jack", 4, "60 detik", "30 detik"],
       ["hollow-hold", 3, plankSec],
+      ["hand-grip-hold", 2, "20-30 detik per tangan", "30 detik"],
     ]),
     day("Sabtu", "Full Body (Heavy)", "~30 menit", [
       ["weighted-squat", 4, "12-15"],
       ["decline-push-up", 3, reps],
       ["weighted-row", 3, reps],
       ["plank", 3, plankSec],
+      ["hand-grip-hold", 2, "20-30 detik per tangan", "30 detik"],
     ]),
     restTotalDay(
       w === 4 ? "Akhir Phase 3! Test: berapa push-up murni max? Catat di Personal Records." : undefined,
@@ -604,12 +635,14 @@ function phase4Week(minggu: number): WorkoutDay[] {
       ["archer-push-up", 4, "5-6 per sisi"],
       ["diamond-pushup-feet-elevated", 3, "8-10"],
       ["pike-push-up", 3, "10-12"],
+      ["hand-grip-pulse", 2, "25-30 per tangan", "30 detik"],
     ]),
     day("Selasa", "Core (Volume)", "~30 menit", [
       ["hollow-hold", 5, plankSec],
       ["leg-raise", 5, "15"],
       ["bicycle-crunch", 4, "30 (15 per sisi)"],
       ["dragon-flag-progression", 3, "5-8"],
+      ["hand-grip-pulse", 2, "25-30 per tangan", "30 detik"],
     ]),
     restActiveDay(),
     day("Kamis", "Pull (Hypertrophy)", "~40 menit", [
@@ -624,12 +657,14 @@ function phase4Week(minggu: number): WorkoutDay[] {
       ["mountain-climber", 4, "50 detik", "30 detik"],
       ["high-knees", 4, "45 detik", "30 detik"],
       ["plank", 4, plankSec],
+      ["hand-grip-pulse", 2, "25-30 per tangan", "30 detik"],
     ]),
     day("Sabtu", "Full Body + Kaki", "~35 menit", [
       ["weighted-squat", 4, "12-15"],
       ["bulgarian-split-squat", 3, "10 per sisi"],
       ["decline-push-up", 3, "10-12"],
       ["weighted-row", 3, "10-12"],
+      ["hand-grip-pulse", 2, "25-30 per tangan", "30 detik"],
     ]),
     restTotalDay(
       w === 4 ? "Akhir Phase 4! Ukur lengan & dada lagi. Lihat foto progres bulan ke-4." : undefined,
@@ -647,12 +682,14 @@ function phase5Week(minggu: number): WorkoutDay[] {
       ["archer-push-up", 4, "6-8 per sisi"],
       ["decline-push-up", 4, "12-15"],
       ["wall-handstand-hold", 3, "20-30 detik"],
+      ["hand-grip-hold", 2, "30-45 detik per tangan", "30 detik"],
     ]),
     day("Selasa", "Core (Advanced)", "~30 menit", [
       ["l-sit-progression", 5, "10-15 detik"],
       ["dragon-flag-progression", 4, "5-8"],
       ["leg-raise", 4, "15-20"],
       ["hollow-hold", 4, "60 detik"],
+      ["hand-grip-hold", 2, "30-45 detik per tangan", "30 detik"],
     ]),
     restActiveDay(),
     day("Kamis", "Pull (Power)", "~40 menit", [
@@ -667,12 +704,14 @@ function phase5Week(minggu: number): WorkoutDay[] {
       ["explosive-push-up", 4, "8"],
       ["skip-rope", 4, "60 detik", "30 detik"],
       ["mountain-climber", 3, "45 detik"],
+      ["hand-grip-hold", 2, "30-45 detik per tangan", "30 detik"],
     ]),
     day("Sabtu", "Full Body (Athletic)", "~35 menit", [
       ["pistol-squat-progression", 4, "5 per sisi"],
       ["bulgarian-split-squat", 3, "10 per sisi"],
       ["pull-up", 3, "5-8"],
       ["decline-push-up", 3, "12-15"],
+      ["hand-grip-hold", 2, "30-45 detik per tangan", "30 detik"],
     ]),
     restTotalDay(
       w === 4 ? "Akhir Phase 5! Test: bisa berapa pull-up murni? Plank berapa lama?" : undefined,
@@ -689,12 +728,14 @@ function phase6Week(minggu: number): WorkoutDay[] {
       ["archer-push-up", 5, "8 per sisi"],
       ["diamond-pushup-feet-elevated", 4, "10-12"],
       ["wall-handstand-hold", 4, "30-60 detik"],
+      ["hand-grip-pulse", 3, "40-50 per tangan", "30 detik"],
     ]),
     day("Selasa", "Core (Master)", "~30 menit", [
       ["l-sit-progression", 5, "15-30 detik"],
       ["dragon-flag-progression", 5, "6-10"],
       ["tuck-front-lever", 4, "10-15 detik"],
       ["side-plank", 4, "60 detik per sisi"],
+      ["hand-grip-pulse", 3, "40-50 per tangan", "30 detik"],
     ]),
     restActiveDay(),
     day("Kamis", "Pull (Master)", "~45 menit", [
@@ -709,12 +750,14 @@ function phase6Week(minggu: number): WorkoutDay[] {
       ["explosive-push-up", 5, "10"],
       ["skip-rope", 5, "90 detik", "30 detik"],
       ["l-sit-progression", 3, "10 detik"],
+      ["hand-grip-pulse", 3, "40-50 per tangan", "30 detik"],
     ]),
     day("Sabtu", "Full Body (Mastery)", "~40 menit", [
       ["pistol-squat-progression", 4, "8 per sisi"],
       ["pull-up", 4, "8-10"],
       ["archer-push-up", 3, "6-8 per sisi"],
       ["dragon-flag-progression", 3, "6-8"],
+      ["hand-grip-pulse", 3, "40-50 per tangan", "30 detik"],
     ]),
     restTotalDay(
       w === 4
