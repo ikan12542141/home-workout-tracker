@@ -15,7 +15,8 @@ export type Equipment =
   | "botol air / dumbbell"
   | "resistance band"
   | "kursi / meja"
-  | "matras";
+  | "matras"
+  | "hand grip";
 
 export type AlternatifTanpaAlat = {
   nama: string;
@@ -931,6 +932,80 @@ export const EXERCISES: Exercise[] = [
     ],
     videoEmbedId: "1BZM2Vre5oc",
     prMetric: "durasi-detik",
+  },
+
+  // =========== HAND GRIP EXERCISES ===========
+  {
+    id: "hand-grip-basic",
+    nama: "Hand Grip — Squeeze Dasar",
+    kategori: ["lengan"],
+    alat: ["hand grip"],
+    deskripsi:
+      "Latihan dasar memperkuat genggaman dan lengan bawah (forearm). Cocok untuk pemula — mulai dari resistance terendah.",
+    langkah: [
+      "POSISI AWAL: Pegang hand grip dengan satu tangan, jari melingkari handle dengan rapat.",
+      "SQUEEZE: Tekan handle sampai rapat/mentok dengan tenaga penuh. Tahan 1-2 detik.",
+      "LEPAS PERLAHAN: Buka genggaman secara terkontrol (jangan langsung lepas). Ini bagian eccentric yang penting.",
+      "ULANGI: Lakukan semua rep di satu tangan dulu, baru pindah ke tangan lainnya.",
+      "BREATHING: Buang napas saat squeeze, tarik napas saat buka.",
+      "Set resistance ke level terendah (5-10kg) untuk pemanasan, lalu naikkan sesuai kemampuan.",
+    ],
+    kesalahanUmum: [
+      "Terlalu cepat — squeeze dan buka harus terkontrol, bukan asal remas.",
+      "Skip tangan non-dominan — selalu latih kedua tangan dengan rep yang sama.",
+      "Resistance terlalu berat sehingga tidak bisa squeeze penuh.",
+    ],
+    tips: [
+      "Pemula: 5-15kg, fokus rep tinggi (15-20 per set).",
+      "Intermediate: 20-35kg, rep 10-15.",
+      "Advanced: 40-60kg, rep 8-12.",
+      "Latihan ini bisa dilakukan sambil nonton TV atau di sela istirahat.",
+    ],
+    videoEmbedId: "uv48RVFR8GY",
+    prMetric: "reps",
+  },
+  {
+    id: "hand-grip-hold",
+    nama: "Hand Grip — Crush Hold",
+    kategori: ["lengan"],
+    alat: ["hand grip"],
+    deskripsi:
+      "Tahan genggaman di posisi tertutup selama mungkin. Melatih daya tahan (endurance) genggaman — penting untuk pull-up dan hanging.",
+    langkah: [
+      "POSISI AWAL: Pegang hand grip, squeeze sampai handle rapat.",
+      "TAHAN: Pertahankan posisi handle rapat/tertutup selama target waktu. Jaga tekanan konstan.",
+      "BREATHING: Napas normal — jangan tahan napas.",
+      "LEPAS: Kalau sudah tidak kuat menahan, buka perlahan.",
+      "Ulangi di tangan satunya dengan durasi yang sama.",
+      "Set resistance lebih ringan dari squeeze biasa (sekitar 60-70% dari max kamu).",
+    ],
+    tips: [
+      "Target: mulai dari 15 detik hold, naikkan ke 30-60 detik.",
+      "Kalau bisa hold >45 detik, naikkan resistance.",
+      "Sangat bagus untuk persiapan dead hang & pull-up.",
+    ],
+    prMetric: "durasi-detik",
+  },
+  {
+    id: "hand-grip-pulse",
+    nama: "Hand Grip — Quick Pulse",
+    kategori: ["lengan"],
+    alat: ["hand grip"],
+    deskripsi:
+      "Squeeze cepat berulang-ulang untuk membangun daya tahan otot forearm dan meningkatkan aliran darah ke lengan.",
+    langkah: [
+      "POSISI: Pegang hand grip dengan resistance ringan-sedang (50-60% dari max).",
+      "PULSE: Squeeze cepat dan buka — ritme cepat tapi tetap squeeze penuh tiap rep.",
+      "TEMPO: Sekitar 1 detik per rep (squeeze-buka = 1 rep).",
+      "Lanjutkan sampai forearm terasa terbakar (burning sensation) — itu tandanya efektif.",
+      "Istirahat, lalu pindah ke tangan satunya.",
+    ],
+    tips: [
+      "Jangan pakai resistance terlalu berat — ini latihan endurance, bukan max strength.",
+      "Target 25-50 rep per set.",
+      "Bagus sebagai finisher di akhir Pull day.",
+    ],
+    prMetric: "reps",
   },
 ];
 
