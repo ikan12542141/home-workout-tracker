@@ -95,6 +95,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "inverted-row-meja", set: 3, reps: "6-8", istirahat: "60 detik" },
           { exerciseId: "bicep-curl-botol", set: 3, reps: "10-12", istirahat: "60 detik" },
           { exerciseId: "hammer-curl", set: 2, reps: "10", istirahat: "60 detik" },
+          { exerciseId: "hand-grip-basic", set: 2, reps: "15-20 per tangan", istirahat: "45 detik" },
           { exerciseId: "side-plank", set: 2, durasi: "15 detik per sisi", istirahat: "45 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
@@ -194,6 +195,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "inverted-row-meja", set: 3, reps: "8-10", istirahat: "60 detik" },
           { exerciseId: "bicep-curl-botol", set: 3, reps: "12", istirahat: "60 detik" },
           { exerciseId: "hammer-curl", set: 3, reps: "10", istirahat: "60 detik" },
+          { exerciseId: "hand-grip-basic", set: 3, reps: "15-20 per tangan", istirahat: "45 detik" },
           { exerciseId: "side-plank", set: 2, durasi: "20 detik per sisi", istirahat: "45 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
@@ -293,6 +295,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "bicep-curl-botol", set: 4, reps: "12", istirahat: "60 detik" },
           { exerciseId: "hammer-curl", set: 3, reps: "12", istirahat: "60 detik" },
           { exerciseId: "resistance-band-row", set: 3, reps: "15", istirahat: "60 detik" },
+          { exerciseId: "hand-grip-hold", set: 2, durasi: "15-20 detik per tangan", istirahat: "45 detik" },
           { exerciseId: "side-plank", set: 3, durasi: "25 detik per sisi", istirahat: "45 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
@@ -393,6 +396,7 @@ export const PROGRAM: WeekProgram[] = [
           { exerciseId: "bicep-curl-botol", set: 4, reps: "15", istirahat: "60 detik" },
           { exerciseId: "hammer-curl", set: 3, reps: "12", istirahat: "60 detik" },
           { exerciseId: "resistance-band-row", set: 3, reps: "15", istirahat: "60 detik" },
+          { exerciseId: "hand-grip-hold", set: 3, durasi: "20-30 detik per tangan", istirahat: "45 detik" },
           { exerciseId: "side-plank", set: 3, durasi: "30 detik per sisi", istirahat: "45 detik" },
         ],
         pendinginan: PENDINGINAN_STANDAR,
@@ -524,6 +528,7 @@ function phase2Week(minggu: number): WorkoutDay[] {
       ["inverted-row-meja", 4, pushReps],
       ["bicep-curl-botol", 4, "12-15"],
       ["hammer-curl", 3, "10-12"],
+      ["hand-grip-basic", 3, "20 per tangan"],
       ["plank", 3, plankSec, "45 detik"],
     ]),
     day("Jumat", "Core + Kardio (HIIT)", "~25 menit", [
@@ -568,6 +573,7 @@ function phase3Week(minggu: number): WorkoutDay[] {
       ["weighted-row", 4, reps],
       ["concentration-curl", 3, "10 per sisi"],
       ["bicep-curl-botol", 3, "12 (berat naik)"],
+      ["hand-grip-hold", 3, "20-30 detik per tangan", "45 detik"],
     ]),
     day("Jumat", "Power + Kardio", "~25 menit", [
       ["burpee", 4, "10-15", "45 detik"],
@@ -611,6 +617,7 @@ function phase4Week(minggu: number): WorkoutDay[] {
       ["weighted-row", 4, "12"],
       ["bicep-curl-botol", 4, "15"],
       ["concentration-curl", 4, "10 per sisi"],
+      ["hand-grip-pulse", 3, "30-40 per tangan", "45 detik"],
     ]),
     day("Jumat", "Conditioning", "~30 menit", [
       ["burpee", 5, "10-12", "60 detik"],
@@ -653,6 +660,7 @@ function phase5Week(minggu: number): WorkoutDay[] {
       ["chin-up", 4, reps],
       ["weighted-row", 4, "10-12"],
       ["preacher-curl-floor", 4, "10-12"],
+      ["hand-grip-hold", 3, "30-45 detik per tangan", "45 detik"],
     ]),
     day("Jumat", "Power + HIIT", "~30 menit", [
       ["burpee-pullup", 5, "5-8", "60 detik"],
@@ -694,6 +702,7 @@ function phase6Week(minggu: number): WorkoutDay[] {
       ["chin-up", 4, "10-12"],
       ["tuck-front-lever", 3, "15-20 detik"],
       ["concentration-curl", 4, "12 per sisi"],
+      ["hand-grip-pulse", 4, "40-50 per tangan", "45 detik"],
     ]),
     day("Jumat", "Brutal Conditioning", "~35 menit", [
       ["burpee-pullup", 5, "8-10", "60 detik"],

@@ -75,6 +75,14 @@ const ALAT: AlatItem[] = [
     alternatifGratis: "Jumping jack, high knees, atau lompat tanpa tali.",
   },
   {
+    nama: "Hand Grip (5-60 kg)",
+    status: "opsional",
+    hargaEstimasi: "Rp 30.000 - 100.000",
+    manfaat:
+      "Memperkuat genggaman dan lengan bawah (forearm). Adjustable dari 5kg sampai 60kg — bisa dipakai dari pemula sampai advanced. Sangat membantu untuk persiapan pull-up dan dead hang.",
+    alternatifGratis: "Remas bola tenis atau handuk basah yang diperas berulang-ulang.",
+  },
+  {
     nama: "Jam / Timer",
     status: "harus punya",
     manfaat: "Untuk plank, HIIT, dan mengatur istirahat antar set.",
