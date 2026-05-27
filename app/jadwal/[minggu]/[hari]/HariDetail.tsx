@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { notFound, useRouter } from "next/navigation";
-import { PROGRAM, dayKey } from "@/lib/program";
+import { PROGRAM, dayKey, isDeloadWeek, applyDeload, getQuickVersion } from "@/lib/program";
 import { getExercise } from "@/lib/exercises";
 import {
   loadProgress,
@@ -13,6 +13,8 @@ import {
   toggleSetComplete,
   loadAltPrefs,
   toggleAltPref,
+  loadQuickMode,
+  saveQuickMode,
   type AltPrefs,
   type PersonalRecord,
   type Progress,
@@ -40,7 +42,8 @@ export default function HariDetail({
   const router = useRouter();
 
   const week = PROGRAM.find((w) => w.minggu === mingguN);
-  const day = week?.hari[hariN];
+  const rawDay = week?.hari[hariN];
+  const deload = isDeloadWeek(mingguN);
 
   const [progress, setProgress] = useState<Progress | null>(null);
   const [records, setRecords] = useState<PersonalRecord[]>([]);
@@ -48,16 +51,22 @@ export default function HariDetail({
   const [prInput, setPrInput] = useState<Record<string, string>>({});
   const [prFlash, setPrFlash] = useState<string | null>(null);
   const [altPrefs, setAltPrefs] = useState<AltPrefs>({});
+  const [quickMode, setQuickMode] = useState(false);
 
   useEffect(() => {
     setProgress(loadProgress());
     setRecords(loadRecords());
     setAltPrefs(loadAltPrefs());
+    setQuickMode(loadQuickMode());
   }, []);
 
-  if (!week || !day || Number.isNaN(mingguN) || Number.isNaN(hariN)) {
+  if (!week || !rawDay || Number.isNaN(mingguN) || Number.isNaN(hariN)) {
     notFound();
   }
+
+  let day = rawDay;
+  if (deload) day = applyDeload(day);
+  if (quickMode) day = getQuickVersion(day);
 
   const dKey = dayKey(mingguN, hariN);
   const done = !!progress?.completedDays[dKey];
@@ -76,6 +85,31 @@ export default function HariDetail({
         >
           ← kembali ke jadwal
         </button>
+
+        {/* Quick Mode + Deload toggles */}
+        <div className="flex flex-wrap gap-2 mb-3">
+          <button
+            type="button"
+            onClick={() => {
+              const next = !quickMode;
+              setQuickMode(next);
+              saveQuickMode(next);
+            }}
+            className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+              quickMode
+                ? "bg-yellow-500/20 border-yellow-500/40 text-yellow-400"
+                : "border-[var(--border)] text-[var(--muted)] hover:border-yellow-500/40 hover:text-yellow-400"
+            }`}
+          >
+            ⚡ {quickMode ? "Quick Mode ON" : "Quick Mode (10 min)"}
+          </button>
+          {deload && (
+            <span className="text-xs px-3 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400">
+              🔄 Deload Week
+            </span>
+          )}
+        </div>
+
         <div className="flex items-start justify-between gap-3">
           <div>
             <div className="text-sm text-[var(--muted)]">

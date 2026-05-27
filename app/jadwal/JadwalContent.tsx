@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { PROGRAM, dayKey, getPhase } from "@/lib/program";
+import { PROGRAM, dayKey, getPhase, isDeloadWeek } from "@/lib/program";
 import { loadProgress, type Progress } from "@/lib/storage";
 
 const HARI_SINGKAT = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
@@ -71,10 +71,18 @@ export default function JadwalContent() {
 
       {PROGRAM.filter((w) => w.minggu === activeWeek).map((week) => (
         <div key={week.minggu} className="space-y-4">
-          <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5">
-            <h2 className="text-xl font-bold">{week.judul}</h2>
+          <div className={`bg-[var(--card)] border rounded-2xl p-5 ${isDeloadWeek(week.minggu) ? "border-blue-500/40" : "border-[var(--border)]"}`}>
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-bold">{week.judul}</h2>
+              {isDeloadWeek(week.minggu) && (
+                <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 font-medium">
+                  Deload
+                </span>
+              )}
+            </div>
             <p className="text-sm text-[var(--muted)] mt-1">
               {week.deskripsi}
+              {isDeloadWeek(week.minggu) && " Volume dikurangi 50% untuk recovery."}
             </p>
           </div>
 

@@ -917,3 +917,42 @@ export function getDay(minggu: number, hariIndex: number): WorkoutDay | undefine
 export function dayKey(minggu: number, hariIndex: number): string {
   return `m${minggu}-h${hariIndex}`;
 }
+
+// =========== DELOAD WEEK ===========
+
+/** Deload weeks: every 4th week in each phase (week 4, 8, 12, 16, 20, 24) */
+export function isDeloadWeek(minggu: number): boolean {
+  return minggu % 4 === 0;
+}
+
+/** Apply deload to a workout day: reduce sets by ~50%, keep reps same */
+export function applyDeload(day: WorkoutDay): WorkoutDay {
+  if (day.isRest) return day;
+  return {
+    ...day,
+    fokus: day.fokus + " (Deload)",
+    catatan: (day.catatan ? day.catatan + " " : "") + "⚡ Minggu deload: volume dikurangi 50%. Fokus recovery & form sempurna.",
+    latihan: day.latihan.map((s) => ({
+      ...s,
+      set: Math.max(1, Math.ceil(s.set / 2)),
+    })),
+  };
+}
+
+// =========== QUICK MODE (10 MIN) ===========
+
+/** Get quick mode version: only top 2-3 most important exercises */
+export function getQuickVersion(day: WorkoutDay): WorkoutDay {
+  if (day.isRest) return day;
+  const quickLatihan = day.latihan
+    .filter((s) => !s.exerciseId.startsWith("hand-grip"))
+    .slice(0, 3)
+    .map((s) => ({ ...s, set: Math.max(1, Math.min(s.set, 2)) }));
+  return {
+    ...day,
+    fokus: day.fokus + " (Quick 10 min)",
+    durasiTotal: "~10 menit",
+    catatan: (day.catatan ? day.catatan + " " : "") + "⚡ Mode cepat: 10 menit, 2-3 latihan utama saja. Lebih baik latihan singkat daripada skip!",
+    latihan: quickLatihan,
+  };
+}

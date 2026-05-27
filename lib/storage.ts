@@ -9,6 +9,9 @@ const PHOTOS_KEY = "hwt-photos-v1";
 const JOURNAL_KEY = "hwt-journal-v1";
 const RECORDS_KEY = "hwt-records-v1";
 const ACHIEVEMENTS_KEY = "hwt-achievements-v1";
+const PROTEIN_KEY = "hwt-protein-v1";
+const FATIGUE_KEY = "hwt-fatigue-v1";
+const QUICK_MODE_KEY = "hwt-quick-mode-v1";
 
 export type Progress = {
   completedDays: Record<string, string>;
@@ -313,6 +316,98 @@ export function toggleAltPref(exerciseId: string): AltPrefs {
   return prefs;
 }
 
+// =========== PROTEIN TRACKER ===========
+
+export type ProteinItem = {
+  id: string;
+  nama: string;
+  emoji: string;
+};
+
+export const PROTEIN_ITEMS: ProteinItem[] = [
+  { id: "telur", nama: "Telur (2 butir)", emoji: "🥚" },
+  { id: "tempe", nama: "Tempe (1 potong)", emoji: "🫘" },
+  { id: "tahu", nama: "Tahu (2 potong)", emoji: "🧊" },
+  { id: "susu", nama: "Susu (1 gelas/sachet)", emoji: "🥛" },
+  { id: "nasi-kacang", nama: "Nasi + Kacang Hijau", emoji: "🍚" },
+  { id: "ayam", nama: "Ayam/Ikan (1 potong)", emoji: "🍗" },
+];
+
+export type ProteinLog = Record<string, string[]>; // date → array of checked item IDs
+
+export function loadProteinLog(): ProteinLog {
+  return readJSON<ProteinLog>(PROTEIN_KEY, {});
+}
+
+export function saveProteinLog(log: ProteinLog): void {
+  writeJSON(PROTEIN_KEY, log);
+  triggerAutoSync();
+}
+
+export function toggleProteinItem(date: string, itemId: string): ProteinLog {
+  const log = loadProteinLog();
+  const items = log[date] ?? [];
+  const idx = items.indexOf(itemId);
+  if (idx >= 0) {
+    items.splice(idx, 1);
+  } else {
+    items.push(itemId);
+  }
+  log[date] = items;
+  saveProteinLog(log);
+  return log;
+}
+
+// =========== FATIGUE TRACKER ===========
+
+export type FatigueEntry = {
+  tanggal: string;
+  level: number; // 1-5
+};
+
+export type FatigueLog = Record<string, number>; // date → level (1-5)
+
+export function loadFatigueLog(): FatigueLog {
+  return readJSON<FatigueLog>(FATIGUE_KEY, {});
+}
+
+export function saveFatigueLog(log: FatigueLog): void {
+  writeJSON(FATIGUE_KEY, log);
+  triggerAutoSync();
+}
+
+export function setFatigueLevel(date: string, level: number): FatigueLog {
+  const log = loadFatigueLog();
+  log[date] = Math.max(1, Math.min(5, level));
+  saveFatigueLog(log);
+  return log;
+}
+
+export function getRecentFatigue(days: number = 3): { avg: number; warning: boolean } {
+  const log = loadFatigueLog();
+  const today = new Date();
+  const levels: number[] = [];
+  for (let i = 0; i < days; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    if (log[key] !== undefined) levels.push(log[key]);
+  }
+  if (levels.length === 0) return { avg: 0, warning: false };
+  const avg = levels.reduce((a, b) => a + b, 0) / levels.length;
+  return { avg: Math.round(avg * 10) / 10, warning: avg >= 4 };
+}
+
+// =========== QUICK MODE ===========
+
+export function loadQuickMode(): boolean {
+  return readJSON<boolean>(QUICK_MODE_KEY, false);
+}
+
+export function saveQuickMode(enabled: boolean): void {
+  writeJSON(QUICK_MODE_KEY, enabled);
+}
+
 // =========== EXPORT / IMPORT ===========
 
 export type FullBackup = {
@@ -326,6 +421,8 @@ export type FullBackup = {
   records: PersonalRecord[];
   achievements: Record<string, AchievementUnlock>;
   altPrefs?: AltPrefs;
+  proteinLog?: ProteinLog;
+  fatigueLog?: FatigueLog;
 };
 
 export function exportAllData(): FullBackup {
@@ -340,6 +437,8 @@ export function exportAllData(): FullBackup {
     records: loadRecords(),
     achievements: loadAchievements(),
     altPrefs: loadAltPrefs(),
+    proteinLog: loadProteinLog(),
+    fatigueLog: loadFatigueLog(),
   };
 }
 
@@ -353,4 +452,6 @@ export function importAllData(backup: FullBackup): void {
   saveRecords(backup.records);
   saveAchievements(backup.achievements);
   if (backup.altPrefs) saveAltPrefs(backup.altPrefs);
+  if (backup.proteinLog) saveProteinLog(backup.proteinLog);
+  if (backup.fatigueLog) saveFatigueLog(backup.fatigueLog);
 }
