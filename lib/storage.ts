@@ -12,6 +12,8 @@ const ACHIEVEMENTS_KEY = "hwt-achievements-v1";
 const PROTEIN_KEY = "hwt-protein-v1";
 const FATIGUE_KEY = "hwt-fatigue-v1";
 const QUICK_MODE_KEY = "hwt-quick-mode-v1";
+const SLEEP_KEY = "hwt-sleep-v1";
+const HYDRATION_KEY = "hwt-hydration-v1";
 
 export type Progress = {
   completedDays: Record<string, string>;
@@ -408,6 +410,85 @@ export function saveQuickMode(enabled: boolean): void {
   writeJSON(QUICK_MODE_KEY, enabled);
 }
 
+// =========== SLEEP TRACKER ===========
+
+export type SleepEntry = {
+  jam: number; // hours slept (e.g. 7.5)
+  kualitas: number; // 1-5
+};
+
+export type SleepLog = Record<string, SleepEntry>; // date → entry
+
+export function loadSleepLog(): SleepLog {
+  return readJSON<SleepLog>(SLEEP_KEY, {});
+}
+
+export function saveSleepLog(log: SleepLog): void {
+  writeJSON(SLEEP_KEY, log);
+  triggerAutoSync();
+}
+
+export function setSleepEntry(date: string, jam: number, kualitas: number): SleepLog {
+  const log = loadSleepLog();
+  log[date] = { jam: Math.max(0, Math.min(24, jam)), kualitas: Math.max(1, Math.min(5, kualitas)) };
+  saveSleepLog(log);
+  return log;
+}
+
+export function getRecentSleep(days: number = 7): { avgJam: number; avgKualitas: number; warning: boolean } {
+  const log = loadSleepLog();
+  const today = new Date();
+  const entries: SleepEntry[] = [];
+  for (let i = 0; i < days; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    if (log[key]) entries.push(log[key]);
+  }
+  if (entries.length === 0) return { avgJam: 0, avgKualitas: 0, warning: false };
+  const avgJam = entries.reduce((a, b) => a + b.jam, 0) / entries.length;
+  const avgKualitas = entries.reduce((a, b) => a + b.kualitas, 0) / entries.length;
+  return {
+    avgJam: Math.round(avgJam * 10) / 10,
+    avgKualitas: Math.round(avgKualitas * 10) / 10,
+    warning: avgJam < 7,
+  };
+}
+
+// =========== HYDRATION TRACKER ===========
+
+export type HydrationLog = Record<string, number>; // date → glasses count
+
+export function loadHydrationLog(): HydrationLog {
+  return readJSON<HydrationLog>(HYDRATION_KEY, {});
+}
+
+export function saveHydrationLog(log: HydrationLog): void {
+  writeJSON(HYDRATION_KEY, log);
+  triggerAutoSync();
+}
+
+export function setHydration(date: string, glasses: number): HydrationLog {
+  const log = loadHydrationLog();
+  log[date] = Math.max(0, Math.min(20, glasses));
+  saveHydrationLog(log);
+  return log;
+}
+
+export function addGlass(date: string): HydrationLog {
+  const log = loadHydrationLog();
+  log[date] = (log[date] ?? 0) + 1;
+  saveHydrationLog(log);
+  return log;
+}
+
+export function removeGlass(date: string): HydrationLog {
+  const log = loadHydrationLog();
+  log[date] = Math.max(0, (log[date] ?? 0) - 1);
+  saveHydrationLog(log);
+  return log;
+}
+
 // =========== EXPORT / IMPORT ===========
 
 export type FullBackup = {
@@ -423,6 +504,8 @@ export type FullBackup = {
   altPrefs?: AltPrefs;
   proteinLog?: ProteinLog;
   fatigueLog?: FatigueLog;
+  sleepLog?: SleepLog;
+  hydrationLog?: HydrationLog;
 };
 
 export function exportAllData(): FullBackup {
@@ -439,6 +522,8 @@ export function exportAllData(): FullBackup {
     altPrefs: loadAltPrefs(),
     proteinLog: loadProteinLog(),
     fatigueLog: loadFatigueLog(),
+    sleepLog: loadSleepLog(),
+    hydrationLog: loadHydrationLog(),
   };
 }
 
@@ -454,4 +539,6 @@ export function importAllData(backup: FullBackup): void {
   if (backup.altPrefs) saveAltPrefs(backup.altPrefs);
   if (backup.proteinLog) saveProteinLog(backup.proteinLog);
   if (backup.fatigueLog) saveFatigueLog(backup.fatigueLog);
+  if (backup.sleepLog) saveSleepLog(backup.sleepLog);
+  if (backup.hydrationLog) saveHydrationLog(backup.hydrationLog);
 }

@@ -207,6 +207,54 @@ export default function ProgresPage() {
         )}
       </section>
 
+      {/* Progressive Overload Graph */}
+      {records.length > 0 && (
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold">Grafik Progressive Overload</h2>
+          <p className="text-sm text-[var(--muted)]">
+            Lihat kekuatan kamu naik dari waktu ke waktu. Setiap card menunjukkan PR terbaik dan target berikutnya.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {records.map((r) => {
+              const ex = getExercise(r.exerciseId);
+              if (!ex) return null;
+              const targetValue = Math.ceil(r.value * 1.2);
+              const pctProgress = Math.round((r.value / targetValue) * 100);
+              return (
+                <div
+                  key={r.exerciseId}
+                  className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm font-semibold truncate">{ex.nama}</p>
+                    <span className="text-[10px] font-mono text-[var(--muted)]">{r.tanggal}</span>
+                  </div>
+                  <div className="flex items-end justify-between mb-2">
+                    <span className="text-3xl font-bold text-[var(--accent)]">{r.value}</span>
+                    <span className="text-sm text-[var(--muted)]">{r.unit}</span>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-[10px] text-[var(--muted)]">
+                      <span>Progress ke target berikutnya</span>
+                      <span>{targetValue} {r.unit}</span>
+                    </div>
+                    <div className="h-2.5 rounded-full bg-[var(--border)] overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[var(--accent)] transition-all"
+                        style={{ width: `${Math.min(100, pctProgress)}%` }}
+                      />
+                    </div>
+                    <p className="text-[10px] text-[var(--muted)]">
+                      Target +20%: {targetValue} {r.unit} (kurang {targetValue - r.value})
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       <section className="space-y-4">
         <h2 className="text-lg font-bold">
           Achievements ({unlockedAch.length}/{ACHIEVEMENTS.length})
