@@ -34,6 +34,8 @@ const NAV_ITEMS = [
   { href: "/jurnal", label: "Jurnal" },
   { href: "/alat", label: "Alat" },
   { href: "/nutrisi", label: "Nutrisi" },
+  { href: "/laporan", label: "Laporan" },
+  { href: "/stretching", label: "Stretching" },
   { href: "/backup", label: "Backup" },
 ];
 

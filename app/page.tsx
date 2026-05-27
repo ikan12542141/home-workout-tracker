@@ -16,10 +16,18 @@ import {
   getRecentFatigue,
   loadQuickMode,
   saveQuickMode,
+  loadSleepLog,
+  setSleepEntry,
+  getRecentSleep,
+  loadHydrationLog,
+  addGlass,
+  removeGlass,
   type Profile,
   type Progress,
   type ProteinLog,
   type FatigueLog,
+  type SleepLog,
+  type HydrationLog,
 } from "@/lib/storage";
 
 const HARI_ID = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
@@ -54,6 +62,9 @@ export default function HomePage() {
   const [proteinLog, setProteinLog] = useState<ProteinLog>({});
   const [fatigueLog, setFatigueLog] = useState<FatigueLog>({});
   const [quickMode, setQuickMode] = useState(false);
+  const [sleepLog, setSleepLog] = useState<SleepLog>({});
+  const [hydrationLog, setHydrationLog] = useState<HydrationLog>({});
+  const [sleepInput, setSleepInput] = useState({ jam: "", kualitas: 0 });
 
   const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
@@ -65,6 +76,8 @@ export default function HomePage() {
     setProteinLog(loadProteinLog());
     setFatigueLog(loadFatigueLog());
     setQuickMode(loadQuickMode());
+    setSleepLog(loadSleepLog());
+    setHydrationLog(loadHydrationLog());
   }, []);
 
   const todayIndex = useMemo(() => getTodayIndex(), []);
@@ -96,6 +109,9 @@ export default function HomePage() {
   const todayProtein = proteinLog[todayStr] ?? [];
   const todayFatigue = fatigueLog[todayStr] ?? 0;
   const recentFatigue = useMemo(() => getRecentFatigue(3), [fatigueLog]);
+  const todaySleep = sleepLog[todayStr];
+  const recentSleep = useMemo(() => getRecentSleep(7), [sleepLog]);
+  const todayWater = hydrationLog[todayStr] ?? 0;
 
   const handleProteinToggle = useCallback((itemId: string) => {
     const updated = toggleProteinItem(todayStr, itemId);
@@ -112,6 +128,24 @@ export default function HomePage() {
     setQuickMode(next);
     saveQuickMode(next);
   }, [quickMode]);
+
+  const handleSleepSave = useCallback(() => {
+    const jam = parseFloat(sleepInput.jam);
+    if (!jam || jam <= 0 || sleepInput.kualitas === 0) return;
+    const updated = setSleepEntry(todayStr, jam, sleepInput.kualitas);
+    setSleepLog({ ...updated });
+    setSleepInput({ jam: "", kualitas: 0 });
+  }, [todayStr, sleepInput]);
+
+  const handleAddGlass = useCallback(() => {
+    const updated = addGlass(todayStr);
+    setHydrationLog({ ...updated });
+  }, [todayStr]);
+
+  const handleRemoveGlass = useCallback(() => {
+    const updated = removeGlass(todayStr);
+    setHydrationLog({ ...updated });
+  }, [todayStr]);
 
   if (!profile || !draft) {
     return <div className="text-[var(--muted)]">Memuat...</div>;
@@ -493,6 +527,155 @@ export default function HomePage() {
             Belum ada protein hari ini. Coba minimal 2 telur + 1 tempe!
           </div>
         )}
+      </section>
+
+      {/* Sleep Tracker */}
+      <section className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5">
+        <h3 className="font-semibold mb-3 flex items-center gap-2">
+          <span>😴</span> Tidur Semalam
+        </h3>
+        {todaySleep ? (
+          <div className="space-y-2">
+            <div className="flex items-center gap-4">
+              <div className="bg-[var(--background)] rounded-xl px-4 py-2">
+                <div className="text-2xl font-bold">{todaySleep.jam}<span className="text-sm font-normal text-[var(--muted)]"> jam</span></div>
+              </div>
+              <div className="bg-[var(--background)] rounded-xl px-4 py-2">
+                <div className="text-2xl font-bold">{todaySleep.kualitas}<span className="text-sm font-normal text-[var(--muted)]">/5 kualitas</span></div>
+              </div>
+            </div>
+            {todaySleep.jam < 7 && (
+              <p className="text-sm text-yellow-400">⚠️ Kurang dari 7 jam. Otot butuh tidur cukup untuk recovery & tumbuh.</p>
+            )}
+            {todaySleep.jam >= 7 && todaySleep.kualitas >= 4 && (
+              <p className="text-sm text-emerald-400">Tidur bagus! Recovery optimal.</p>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <p className="text-xs text-[var(--muted)]">Tidur = #1 recovery factor. Target: 7-9 jam, kualitas baik.</p>
+            <div className="flex gap-3 items-end">
+              <label className="flex flex-col gap-1 text-sm flex-1">
+                <span className="text-xs text-[var(--muted)]">Jam tidur</span>
+                <input
+                  type="number"
+                  step="0.5"
+                  min="0"
+                  max="24"
+                  placeholder="mis. 7.5"
+                  value={sleepInput.jam}
+                  onChange={(e) => setSleepInput((s) => ({ ...s, jam: e.target.value }))}
+                  className="bg-[var(--background)] border border-[var(--border)] rounded-lg px-3 py-2 focus:outline-none focus:border-[var(--accent)]"
+                />
+              </label>
+              <div className="flex-1">
+                <span className="text-xs text-[var(--muted)] block mb-1">Kualitas</span>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((q) => (
+                    <button
+                      key={q}
+                      type="button"
+                      onClick={() => setSleepInput((s) => ({ ...s, kualitas: q }))}
+                      className={`flex-1 py-2 rounded-lg text-sm transition-all ${
+                        sleepInput.kualitas === q
+                          ? "bg-[var(--accent)] text-black font-bold"
+                          : "bg-[var(--background)] border border-[var(--border)] hover:border-[var(--accent)]"
+                      }`}
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handleSleepSave}
+                disabled={!sleepInput.jam || sleepInput.kualitas === 0}
+                className="px-4 py-2 rounded-lg bg-[var(--accent)] text-black font-medium hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-40"
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+        )}
+        {recentSleep.avgJam > 0 && (
+          <div className="mt-3 pt-3 border-t border-[var(--border)] flex gap-4 text-xs text-[var(--muted)]">
+            <span>7 hari terakhir: {recentSleep.avgJam} jam avg</span>
+            <span>Kualitas: {recentSleep.avgKualitas}/5 avg</span>
+            {recentSleep.warning && <span className="text-yellow-400">⚠️ Kurang tidur!</span>}
+          </div>
+        )}
+      </section>
+
+      {/* Hydration Tracker */}
+      <section className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-semibold flex items-center gap-2">
+            <span>💧</span> Air Hari Ini
+          </h3>
+          <span className={`text-sm font-mono ${todayWater >= 8 ? "text-emerald-400" : "text-[var(--muted)]"}`}>
+            {todayWater} / 8 gelas
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex-1 flex gap-1">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
+                key={i}
+                className={`flex-1 h-8 rounded-lg transition-all ${
+                  i < todayWater
+                    ? "bg-blue-500/40 border border-blue-500/60"
+                    : "bg-[var(--background)] border border-[var(--border)]"
+                }`}
+              />
+            ))}
+          </div>
+          <div className="flex gap-1">
+            <button
+              type="button"
+              onClick={handleRemoveGlass}
+              className="h-8 w-8 rounded-lg border border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)] flex items-center justify-center"
+            >
+              -
+            </button>
+            <button
+              type="button"
+              onClick={handleAddGlass}
+              className="h-8 w-8 rounded-lg bg-blue-500/20 border border-blue-500/40 text-blue-400 hover:bg-blue-500/30 flex items-center justify-center"
+            >
+              +
+            </button>
+          </div>
+        </div>
+        {todayWater >= 8 && (
+          <p className="text-sm text-emerald-400 mt-2">Target tercapai! Hidrasi cukup = performa latihan lebih baik.</p>
+        )}
+        {todayWater > 0 && todayWater < 8 && (
+          <p className="text-xs text-[var(--muted)] mt-2">Kurang {8 - todayWater} gelas lagi. Dehidrasi bikin latihan terasa berat.</p>
+        )}
+      </section>
+
+      <section className="grid sm:grid-cols-2 gap-3">
+        <Link
+          href="/laporan"
+          className="block bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 hover:border-[var(--accent)] transition-colors"
+        >
+          <div className="text-xl mb-1">📊</div>
+          <h3 className="font-semibold mb-1">Laporan Mingguan</h3>
+          <p className="text-sm text-[var(--muted)]">
+            Rangkuman progres: latihan, tidur, protein, hidrasi, PR baru.
+          </p>
+        </Link>
+        <Link
+          href="/stretching"
+          className="block bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 hover:border-[var(--accent)] transition-colors"
+        >
+          <div className="text-xl mb-1">🧘</div>
+          <h3 className="font-semibold mb-1">Stretching & Mobility</h3>
+          <p className="text-sm text-[var(--muted)]">
+            Rutinitas peregangan 10 menit untuk pemula. Cegah cedera.
+          </p>
+        </Link>
       </section>
 
       <section className="grid sm:grid-cols-2 gap-3">
